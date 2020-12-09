@@ -1,4 +1,4 @@
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch, Redirect} from 'react-router-dom'
 import React from 'react'
 
 import Home from './pages/Home'
@@ -13,6 +13,7 @@ function App() {
           <Route path="/" exact component={Home}/>
           <Route path="/list"  component={ExercisesList}/>
           <Route path="/workout"  component={Workout}/>
+          <Redirect to="/" />
         </Switch>
     </div>
   );

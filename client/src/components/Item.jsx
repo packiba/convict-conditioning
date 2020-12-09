@@ -1,13 +1,22 @@
 import classNames from "classnames";
+import React from 'react'
 
-function Item({ onClick, className, height, big, level, children }) {
+function Item({ id, className, height, big, level, children }) {
+  console.log(id)
+
+  const [activeCategory, setActiveCategory] = React.useState(false)
+
+  const onActiveCategory = () => {
+    setActiveCategory(true)
+  }
 
   return (
     <button
-      onClick={onClick}
+      onClick={onActiveCategory}
       className={classNames(
         "item",
         className,
+        {"active": activeCategory},
         {"item--big": big},
         {"item--level": level}
       )}

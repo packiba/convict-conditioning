@@ -10,6 +10,7 @@
   transition: background-color $duration ease-in-out;
 
   & span {
+    user-select: none;
     font-size: 21px;
     font-weight: 400;
     letter-spacing: -0.05em;
@@ -19,7 +20,7 @@
     background: linear-gradient(90.71deg, rgba(255, 255, 255, 0.2) 72.61%, rgba(255, 255, 255, 0) 99.4%);
   }
 
-  &:active span {
+  &.active span {
     color: $orange;
   }
 
@@ -47,7 +48,7 @@
     align-items: center;
     margin-top: 9px;
 
-    &:active span.label {
+    &.active span.label {
       color: #000;
     }
 

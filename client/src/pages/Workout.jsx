@@ -2,8 +2,8 @@ import React from 'react'
 import logoPng from '../assets/img/logo.png'
 import anim from '../assets/gif/anim2.gif'
 import Item from '../components/Item'
-import Bullets from '../components/Bullets'
 import Button from '../components/Button'
+import {Link} from 'react-router-dom'
 
 function Workout() {
   return (
@@ -11,9 +11,11 @@ function Workout() {
       <div className="container">
         <div className="workout-row">
           <div className="workout-left">
-            <div className="logo center">
-              <img src={logoPng} alt="logo"/>
-            </div>
+            <Link to="/">
+              <div className="logo center">
+                <img src={logoPng} alt="logo"/>
+              </div>
+            </Link>
             <div className="animation">
               <img src={anim} alt="anim"/>
             </div>

@@ -41,6 +41,7 @@
 }
 
 .greeting {
+  user-select: none;
   margin-top: 72px;
   margin-left: 65px;
 
@@ -65,6 +66,7 @@
   width: 317px;
   font-size: 14px;
   font-weight: 300;
+  user-select: none;
 
   & p {
     max-width: 273px;
