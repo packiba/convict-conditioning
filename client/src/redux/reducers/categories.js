@@ -2,7 +2,8 @@ import {SET_CATEGORY_ACTIVE, SET_CATEGORY_LIST} from '../actions/types'
 
 const initialState = {
   categoriesList: [],
-  activeCategory : []
+  activeCategory : [],
+  activeCategoryId: 0
 };
 
 const categories = (state = initialState, action) => {
@@ -15,7 +16,7 @@ const categories = (state = initialState, action) => {
     case SET_CATEGORY_ACTIVE: {
       const newActiveCategory = new Array(state.categoriesList.length).fill(false)
       newActiveCategory[action.payload] = true
-      return {...state, activeCategory: newActiveCategory}
+      return {...state, activeCategory: newActiveCategory, activeCategoryId: action.payload}
     }
     default:
       return state;

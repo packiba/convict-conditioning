@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import React from 'react'
 
-function Item({ id, name, onClick, className, active, height, big, level, children }) {
+function Item({ id, onClick, className, active, height, big, level, children }) {
 
   return (
     <button
-      onClick={() => onClick(id, name)}
+      onClick={() => onClick(id,)}
       className={classNames(
         "item",
         className,

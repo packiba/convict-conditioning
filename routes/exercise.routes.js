@@ -7,10 +7,7 @@ const Exercise = require('../models/Exercise')
 router.get('/categories', async (req, res) =>{
     try{
       const categories = await Exercise.distinct("category")
-      console.log('categories ---', categories)
-
       res.status(200).json({categories, message: 'Все категории'})
-
     } catch (e) {
       res.status(500).json({message: 'Что-то пошло не так, серверная ошибка'})
     }
@@ -20,7 +17,6 @@ router.get('/categories', async (req, res) =>{
 router.get('/category/:id', async (req, res) => {
     try{
       const categoryNum = req.params.id
-
       const categoryExercises = await Exercise.find(
         {"category.id": categoryNum},
         {"exercise.name": true, _id: false})

@@ -7,27 +7,26 @@ import {Link} from 'react-router-dom'
 import {useHttp} from '../hooks/http.hook'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCategoryActive, setCategoryList} from '../redux/actions/categories'
-import {setExerciseActive} from '../redux/actions/exercise'
+import {setExercise} from '../redux/actions/exercise'
 
 function ExercisesList() {
   const {request} = useHttp()
   const dispatch = useDispatch();
   const categoriesList = useSelector(({ categories }) => categories.categoriesList);
   const activeCategory = useSelector(({ categories }) => categories.activeCategory);
+  const activeCategoryId = useSelector(({ categories }) => categories.activeCategoryId);
 
   const [exerList, setExerList] = React.useState([])
 
   const onActiveCategory = async (id) => {
-    console.log('id', id)
     dispatch(setCategoryActive(id))
     const data = await getCategoryExercises(id)
-    console.log(data)
     setExerList(data)
 
   }
 
-  const onActiveExer = async (id) => {
-    dispatch(setExerciseActive(id))
+  const onActiveExercise = async (id) => {
+    dispatch(setExercise(id, activeCategoryId))
   }
 
   const getCategoryExercises = async (categoryId) => {
@@ -86,16 +85,17 @@ function ExercisesList() {
               })}
             </div>
             <div className="listpage-exercises">
-              {exerList && exerList.map((exer, id) => {
+              {exerList && exerList.map((exercise, id) => {
                 return (
                   <Link to="/workout" key={id}>
                     <Item
                       key={id}
+                      id={id}
                       height="43"
-                      onClick={onActiveExer}
+                      onClick={onActiveExercise}
                     >
                       <Bullets/>
-                      <span>{exer}</span>
+                      <span>{exercise}</span>
                     </Item>
                   </Link>
                 )

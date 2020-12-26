@@ -1,7 +1,12 @@
-import {SET_EXERCISE_ACTIVE} from './types'
+import {SET_EXERCISE, SET_EXERCISE_DATA} from './types'
 
 
-export const setExerciseActive = (id, name) => ({
-  type: SET_EXERCISE_ACTIVE,
-  payload: {id, name}
+export const setExercise = (id, idCat) => ({
+  type: SET_EXERCISE,
+  payload: {id, idCat}
+});
+
+export const setExerciseData = (data) => ({
+  type: SET_EXERCISE_DATA,
+  payload: {data}
 });
