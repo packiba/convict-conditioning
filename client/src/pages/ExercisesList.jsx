@@ -22,10 +22,9 @@ function ExercisesList() {
     dispatch(setCategoryActive(id))
     const data = await getCategoryExercises(id)
     setExerList(data)
-
   }
 
-  const onActiveExercise = async (id) => {
+  const onActiveExercise = (id) => {
     dispatch(setExercise(id, activeCategoryId))
   }
 
@@ -41,10 +40,8 @@ function ExercisesList() {
   const getAllCategories = async () => {
     try {
       const data = await request('/categories')
-      console.log(data.categories)
       const catList = []
       data.categories.map(item => catList.push(item.name))
-      console.log('catList', catList)
       dispatch(setCategoryList(catList))
     } catch (e) {
       console.log('error', e.message)

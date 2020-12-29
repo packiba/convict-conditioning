@@ -133,13 +133,13 @@
     }
 
     &.done {
-      background: $orange;
       border: 1px solid  $orange;
+      color: $orange;
     }
 
     &.active {
+      background: $orange;
       border: 1px solid  $orange;
-      color: $orange;
     }
   }
 }
