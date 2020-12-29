@@ -9,12 +9,34 @@ import {Link} from 'react-router-dom'
 import {useHttp} from '../hooks/http.hook'
 import {setExercise, setExerciseData, setLevel} from '../redux/actions/exercise'
 
+
 function Workout() {
   const {request} = useHttp()
   const dispatch = useDispatch();
   const {catId, exerciseId, activeLevel, isLoaded} = useSelector(({ exercise }) => exercise);
   const {name, category, level1, level2, level3, description, animUri} = useSelector(({ exercise }) => exercise);
 
+  const levels = [
+      {name: 'Начальный уровень', sets: level1},
+      {name: 'Продвинутый уровень', sets: level2},
+      {name: 'Мастер', sets: level3},
+  ]
+
+  const [curReps, setCurReps] = React.useState(0)
+
+  React.useEffect(() => {
+    setCurReps(levels[activeLevel].sets[0])
+  }, [activeLevel, isLoaded])
+
+  const minusRep = () => {
+    setCurReps(prevState => {
+      return prevState - 1 < 0 ? 0 : prevState -1
+    })
+  }
+
+  const plusRep = () => {
+    setCurReps(prevState => prevState+1)
+  }
 
   const getExercise = async (catId, id) => {
     try {
@@ -62,67 +84,57 @@ function Workout() {
             <div className="exercise-row">
               <div className="exercise-levels">
                 <span className="label">выбери уровень</span>
-                <Item
-                  height="49"
-                  level
-                  active={activeLevel === 0}
-                  onClick={onActiveLevel}
-                  id={0}
-                >
-                  <div className="level-description">
-                    <span>Начальный уровень</span>
-                    <span className="label">{isLoaded ? `${level1.length} сет по ${level1[0]} повторений` : ''}</span>
-                  </div>
 
-                  <ul className="level-reps">
-                    {isLoaded && level1.map((item, id) => (
-                      <li key={id} className="exercise-reps">{item}</li>
-                    ))}
-                  </ul>
-                </Item>
-                <Item
-                  height="49"
-                  level
-                  active={activeLevel === 1}
-                  onClick={onActiveLevel}
-                  id={1}
-                >
-                  <div className="level-description">
-                    <span>Продвинутый уровень</span>
-                    <span className="label">{isLoaded ? `${level2.length} сета по ${level2[0]} повторений` : ''}</span>
-                  </div>
+                {isLoaded && levels.map((level, idLev) => (
+                  <Item
+                    key={idLev}
+                    height="49"
+                    level
+                    active={activeLevel === idLev}
+                    onClick={onActiveLevel}
+                    id={idLev}
+                  >
+                    <div className="level-description">
+                      <span>{level.name}</span>
+                      <span className="label">
+                        {`${level.sets.length} ${level.sets.length === 1 ? 'сет' : 'сета'} по ${level.sets[0]} повторений`}
+                      </span>
+                    </div>
 
-                  <ul className="level-reps">
-                    {isLoaded && level2.map((item, id) => (
-                      <li key={id} className="exercise-reps">{item}</li>
-                    ))}
-                  </ul>
-                </Item>
-                <Item
-                  height="49"
-                  level
-                  active={activeLevel === 2}
-                  onClick={onActiveLevel}
-                  id={2}
-                >
-                  <div className="level-description">
-                    <span>Мастер</span>
-                    <span className="label">{isLoaded ? `${level3.length} сета по ${level3[0]} повторений` : ''}</span>
-                  </div>
+                    <ul className="level-reps">
+                      {level.sets.map((set, idSet) => (
+                        <li
+                          key={idSet}
+                          className={
+                            activeLevel === idLev && idSet === 0
+                              ? 'exercise-reps active'
+                              : "exercise-reps"
+                          }
+                        >
+                          {set}
+                        </li>
+                      ))}
+                    </ul>
+                  </Item>
+                ))}
 
-                  <ul className="level-reps">
-                    {isLoaded && level3.map((item, id) => (
-                      <li key={id} className="exercise-reps">{item}</li>
-                    ))}
-                  </ul>
-                </Item>
               </div>
               <div className="exercise-amount">
                 <span className="label">Делаем упражнение и вводим количество сделанных повторений</span>
                 <div className="reps-setup">
-                  <button className="button--circle minus"><span className="minus">-</span></button>
-                  <div className="reps-current"><span>20</span></div>
-                  <button className="button--circle"><span>+</span></button>
+                  <button
+                    className="button--circle minus"
+                    onClick={minusRep}
+                  >
+                    <span className="minus">-</span>
+                  </button>
+                  <div className="reps-current"><span>{curReps}</span></div>
+                  <button
+                    className="button--circle"
+                    onClick={plusRep}
+                  >
+                    <span>+</span>
+                  </button>
                 </div>
                 <Button orange><span>сделал</span></Button>
               </div>

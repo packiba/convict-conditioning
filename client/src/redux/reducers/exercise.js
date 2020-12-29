@@ -12,7 +12,6 @@ const initialState = {
   description: '',
   animUri: '',
   activeLevel: 0,
-  levReps: [],
 };
 
 const exercise = (state = initialState, action) => {
@@ -28,20 +27,11 @@ const exercise = (state = initialState, action) => {
         level3: action.payload.data.level3,
         description: action.payload.data.description,
         animUri: action.payload.data.anim,
-        levReps: [new Array(action.payload.data.level1.length).fill(false),
-          new Array(action.payload.data.level2.length).fill(false),
-          new Array(action.payload.data.level3.length).fill(false)
-        ],
+        activeLevel: 0,
         isLoaded: true
       };
     case SET_LEVEL_ACTIVE:
-      const newLevReps = [new Array(state.level1.length).fill(false),
-        new Array(state.level2.length).fill(false),
-        new Array(state.level3.length).fill(false)
-      ]
-      newLevReps[action.payload][0] = true
-      console.log('levReps', newLevReps)
-      return {...state, activeLevel: action.payload, levReps: newLevReps}
+      return {...state, activeLevel: action.payload}
     default:
       return state;
   }
