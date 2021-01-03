@@ -11,7 +11,7 @@ const categories = (state = initialState, action) => {
     case SET_CATEGORY_LIST:
       const categoriesCount = action.payload.length
       const newActiveCategory = new Array(categoriesCount).fill(false)
-      newActiveCategory[0] = true
+      newActiveCategory[state.activeCategoryId] = true
       return { ...state, categoriesList: action.payload, activeCategory: newActiveCategory};
     case SET_CATEGORY_ACTIVE: {
       const newActiveCategory = new Array(state.categoriesList.length).fill(false)

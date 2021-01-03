@@ -30,20 +30,21 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
       console.log('reg form', form)
       const data = await request('/api/auth/register', 'POST', {...form})
       console.log(data)
-      dispatch(setUser({name: form.name,  email: form.email}))
-      auth.login(data.userId, data.name)
+      dispatch(setUser({name: form.name, email: form.email, id: data.userId}))
+      auth.login(data.userId, data.name, form.email)
       onClosePopup()
     } catch (e) {
       setMessage('error', e.message)
     }
   }
-
   const loginHandler = async () => {
+
     try {
       console.log('login form', form)
       const data = await request('/api/auth/login', 'POST', {...form})
       console.log(data)
-      auth.login(data.userId, form.name)
+      auth.login(data.userId, form.name, form.email)
+      dispatch(setUser({name: form.name, email: form.email, id: data.userId}))
       onClosePopup()
     } catch (e) {
       setMessage('error', e.message)

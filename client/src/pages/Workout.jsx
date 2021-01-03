@@ -7,22 +7,24 @@ import Item from '../components/Item'
 import Button from '../components/Button'
 import {Link} from 'react-router-dom'
 import {useHttp} from '../hooks/http.hook'
-import {setExercise, setExerciseData, setLevel} from '../redux/actions/exercise'
+import {setExerciseData, setLevel} from '../redux/actions/exercise'
 
 
 function Workout() {
   const {request} = useHttp()
   const dispatch = useDispatch();
+  const userId = useSelector(({ user }) => user.id);
   const {catId, exerciseId, activeLevel, isLoaded} = useSelector(({ exercise }) => exercise);
   const {name, category, level1, level2, level3, description, animUri} = useSelector(({ exercise }) => exercise);
 
-  const levels = [
-      {name: 'Начальный уровень', sets: level1},
-      {name: 'Продвинутый уровень', sets: level2},
-      {name: 'Мастер', sets: level3},
-  ]
+  const [levels, setLevels] = React.useState(
+    [{name: 'Начальный уровень', sets: level1},
+    {name: 'Продвинутый уровень', sets: level2},
+    {name: 'Мастер', sets: level3}]
+  )
 
   const [curReps, setCurReps] = React.useState(0)
+  const [curSet, setCurSet] = React.useState(0)
 
   React.useEffect(() => {
     setCurReps(levels[activeLevel].sets[0])
@@ -53,13 +55,51 @@ function Workout() {
 
   const onActiveLevel = (id) => {
     dispatch(setLevel(id))
+    setCurSet(0)
+  }
+
+  const doneCurSet = () => {
+    const newLevels = levels
+    newLevels[activeLevel].sets[curSet] = curReps
+    setLevels(newLevels)
+    const setsNum = levels[activeLevel].sets.length
+    if (setsNum - (curSet + 1) > 0) {
+      setCurSet(prevState => prevState + 1)
+    } else {
+      saveLog()
+    }
+  }
+
+  const saveLog = async () => {
+    console.log('loggin...')
+    try {
+      const data = await request('/log', 'POST',
+        {
+          userId: userId,
+          catId,
+          exId: exerciseId,
+          curLev: activeLevel,
+          sets: levels[activeLevel].sets
+        })
+      console.log('log', data)
+    } catch (e) {
+      console.log('error', e.message)
+    }
+  }
+
+
+  const repsBuilder = (idLev, idSet) => {
+    if (activeLevel === idLev) {
+      return idSet === curSet ? 'exercise-reps active'
+        : idSet < curSet ? 'exercise-reps done' : 'exercise-reps'
+    }
+    return "exercise-reps"
   }
 
 
   return (
     <div className="background">
       <div className="container">
-
         <div className="workout-row">
           <div className="workout-left">
             <Link to="/">
@@ -105,11 +145,7 @@ function Workout() {
                       {level.sets.map((set, idSet) => (
                         <li
                           key={idSet}
-                          className={
-                            activeLevel === idLev && idSet === 0
-                              ? 'exercise-reps active'
-                              : "exercise-reps"
-                          }
+                          className={repsBuilder(idLev, idSet)}
                         >
                           {set}
                         </li>
@@ -136,7 +172,12 @@ function Workout() {
                     <span>+</span>
                   </button>
                 </div>
-                <Button orange><span>сделал</span></Button>
+                <Button
+                  orange
+                  onClick={doneCurSet}
+                >
+                  <span>сделал</span>
+                </Button>
               </div>
             </div>
 

@@ -50,7 +50,7 @@ function ExercisesList() {
 
   React.useEffect(async () => {
     getAllCategories()
-    setExerList(await getCategoryExercises(0))
+    setExerList(await getCategoryExercises(activeCategoryId))
   }, [])
 
 

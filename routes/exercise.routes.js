@@ -6,6 +6,7 @@ const Exercise = require('../models/Exercise')
 // /categories
 router.get('/categories', async (req, res) =>{
     try{
+      console.log(req)
       const categories = await Exercise.distinct("category")
       res.status(200).json({categories, message: 'Все категории'})
     } catch (e) {
@@ -30,8 +31,6 @@ router.get('/category/:id', async (req, res) => {
 // /exercise/${catId}/${id}
 router.get('/exercise/:catId/:id', async (req, res) => {
     try{
-      console.log(req.params.catId, req.params.id)
-
       const exerciseData = await Exercise.find(
         {"category.id": req.params.catId, "exercise.id": req.params.id})
       res.status(200).json({exerciseData, message: 'Выборка упражнения'})

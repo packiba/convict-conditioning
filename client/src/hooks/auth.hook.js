@@ -11,13 +11,14 @@ export const useAuth = () => {
   const [ready, setReady] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  const login  = useCallback((id, name) => {
+  const login  = useCallback((id, name, email) => {
 
     localStorage.setItem(storageName, JSON.stringify({
       userId: id,
-      userName: name
+      userName: name,
+      email: email
     }))
-    dispatch(setUser({name: name}))
+    dispatch(setUser({name: name, id: id, email: email}))
 
   }, [])
 
@@ -30,7 +31,7 @@ export const useAuth = () => {
     const data = JSON.parse(localStorage.getItem(storageName))
 
     if (data) {
-      login(data.userId, data.userName)
+      login(data.userId, data.userName, data.email)
       setIsAuthenticated(true)
     }
     setReady(true)

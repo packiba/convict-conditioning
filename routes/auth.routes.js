@@ -2,14 +2,13 @@ const {Router} = require('express')
 const router = Router()
 const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
-// const config = require('config')
 
 
 // /api/auth/register
 router.post(
   '/register',
   check('email', 'Некорректный email').isEmail(),
-  async (req, res) =>{
+  async (req, res) => {
     try{
       console.log('Body:', req.body)
       const errors = validationResult(req)
@@ -41,7 +40,7 @@ router.post(
 // /api/auth/login
 router.post('/login',
   check('email', 'Введите корректный email').normalizeEmail().isEmail(),
-  async (req, res) =>{
+  async (req, res) => {
     try{
       const errors = validationResult(req)
 
