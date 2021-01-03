@@ -18,9 +18,11 @@ function Workout() {
   const {name, category, level1, level2, level3, description, animUri} = useSelector(({ exercise }) => exercise);
 
   const [levels, setLevels] = React.useState(
-    [{name: 'Начальный уровень', sets: level1},
-    {name: 'Продвинутый уровень', sets: level2},
-    {name: 'Мастер', sets: level3}]
+[
+          {name: 'Начальный уровень', sets: level1},
+          {name: 'Продвинутый уровень', sets: level2},
+          {name: 'Мастер', sets: level3}
+        ]
   )
 
   const [curReps, setCurReps] = React.useState(0)
@@ -44,13 +46,45 @@ function Workout() {
     try {
       const data = await request(`/exercise/${catId}/${id}`)
       dispatch(setExerciseData(data.exerciseData[0]))
+
     } catch (e) {
       console.log('error', e.message)
     }
   }
 
-  React.useEffect( () => {
-    getExercise(catId, exerciseId)
+  function checkLevel(obj) {
+    const arrLog = obj.sets
+    const arrTarget = levels[obj.curLev].sets
+    for (let i=0; i < arrLog.length; i++) {
+      if (arrLog[i] < arrTarget[i]) {
+        return obj.curLev
+      }
+    }
+    return obj.curLev === 2 ? obj.curLev : obj.curLev + 1
+  }
+
+
+  const getLastLog = async (catId,  exId, userId) => {
+    try {
+      const data = await request(`/journal/${catId}/${exId}/${userId}`)
+      if (data.log) {
+        const lvl = checkLevel(data.log)
+        console.log('set level', lvl)
+        dispatch(setLevel(lvl))
+      } else {
+        dispatch(setLevel(0))
+      }
+    } catch (e) {
+      console.log('error', e.message)
+    }
+  }
+
+  React.useEffect(  () => {
+    async function load() {
+      await getExercise(catId, exerciseId)
+      await getLastLog(catId, exerciseId, userId)
+    }
+    load()
   }, [])
 
   const onActiveLevel = (id) => {
@@ -70,10 +104,17 @@ function Workout() {
     }
   }
 
+  const repsBuilder = (idLev, idSet) => {
+    if (activeLevel === idLev) {
+      return idSet === curSet ? 'exercise-reps active'
+        : idSet < curSet ? 'exercise-reps done' : 'exercise-reps'
+    }
+    return "exercise-reps"
+  }
+
   const saveLog = async () => {
-    console.log('loggin...')
     try {
-      const data = await request('/log', 'POST',
+      const data = await request('/journal/log', 'POST',
         {
           userId: userId,
           catId,
@@ -85,15 +126,6 @@ function Workout() {
     } catch (e) {
       console.log('error', e.message)
     }
-  }
-
-
-  const repsBuilder = (idLev, idSet) => {
-    if (activeLevel === idLev) {
-      return idSet === curSet ? 'exercise-reps active'
-        : idSet < curSet ? 'exercise-reps done' : 'exercise-reps'
-    }
-    return "exercise-reps"
   }
 
 
@@ -172,12 +204,22 @@ function Workout() {
                     <span>+</span>
                   </button>
                 </div>
-                <Button
-                  orange
-                  onClick={doneCurSet}
-                >
-                  <span>сделал</span>
-                </Button>
+                {levels[activeLevel].sets.length-curSet === 1
+                ? (<Link to='/list'>
+                    <Button
+                      orange
+                      onClick={doneCurSet}
+                    >
+                      <span>сделал</span>
+                    </Button>
+                  </Link>
+                  )
+                : (<Button
+                    orange
+                    onClick={doneCurSet}
+                  >
+                    <span>сделал</span>
+                  </Button>)}
               </div>
             </div>
 

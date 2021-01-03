@@ -8,6 +8,7 @@ app.use(express.json({ extended: true}))
 
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/', require('./routes/exercise.routes'))
+app.use('/journal', require('./routes/training.log.routes'))
 
 const PORT = config.get('port') || 5000
 

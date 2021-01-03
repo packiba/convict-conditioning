@@ -27,7 +27,6 @@ const exercise = (state = initialState, action) => {
         level3: action.payload.data.level3,
         description: action.payload.data.description,
         animUri: action.payload.data.anim,
-        activeLevel: 0,
         isLoaded: true
       };
     case SET_LEVEL_ACTIVE:

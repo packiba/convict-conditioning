@@ -6,7 +6,6 @@ const Exercise = require('../models/Exercise')
 // /categories
 router.get('/categories', async (req, res) =>{
     try{
-      console.log(req)
       const categories = await Exercise.distinct("category")
       res.status(200).json({categories, message: 'Все категории'})
     } catch (e) {
@@ -39,6 +38,7 @@ router.get('/exercise/:catId/:id', async (req, res) => {
       res.status(500).json({message: 'Что-то пошло не так, серверная ошибка'})
     }
   })
+
 
 
 module.exports = router

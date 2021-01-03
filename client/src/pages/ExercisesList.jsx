@@ -48,9 +48,12 @@ function ExercisesList() {
     }
   }
 
-  React.useEffect(async () => {
-    getAllCategories()
-    setExerList(await getCategoryExercises(activeCategoryId))
+  React.useEffect(() => {
+    async function load() {
+      await getAllCategories()
+      setExerList(await getCategoryExercises(activeCategoryId))
+    }
+    load()
   }, [])
 
 
