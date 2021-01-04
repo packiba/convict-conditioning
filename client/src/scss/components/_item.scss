@@ -1,0 +1,71 @@
+.item {
+  display: flex;
+  align-items: center;
+  width: 605px;
+  padding: 0 20px;
+  background: linear-gradient(90.71deg, rgba(255, 255, 255, 0.06) 72.61%, rgba(255, 255, 255, 0) 99.4%);
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color $duration ease-in-out;
+
+  & span {
+    user-select: none;
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: -0.05em;
+  }
+
+  &:hover {
+    background: linear-gradient(90.71deg, rgba(255, 255, 255, 0.2) 72.61%, rgba(255, 255, 255, 0) 99.4%);
+  }
+
+  &.active span {
+    color: $orange;
+  }
+
+
+  &.item--big {
+    background: linear-gradient(90.45deg, rgba(255, 255, 255, 0.06) 14.23%, rgba(255, 255, 255, 0) 99.62%);
+    padding: 0 30px;
+    width: 495px;
+    transition: background-color 0.5s ease-in-out;
+
+    & span {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    &.item--big:hover {
+      background: linear-gradient(90.45deg, rgba(255, 255, 255, 0.2) 14.23%, rgba(255, 255, 255, 0) 99.62%);
+    }
+  }
+
+  &.item--level {
+    padding: 0 15px;
+    width: 370px;
+    display: flex;
+    align-items: center;
+    margin-top: 9px;
+
+    &.active span.label {
+      color: #000;
+    }
+
+    & span {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 2px;
+      text-align: start;
+      }
+
+    & span.label {
+      margin-left: 7px;
+    }
+    }
+
+    & span.label {
+      font-size: 11px;
+
+    }
+}

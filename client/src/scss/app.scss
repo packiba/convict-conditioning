@@ -1,0 +1,157 @@
+@import 'fonts';
+@import 'variables';
+@import 'normalize';
+
+@import 'components/button';
+@import 'components/timer';
+@import 'components/item';
+@import 'components/bullets';
+@import 'components/workout-page';
+@import 'components/list-page';
+
+.container {
+  width: 1170px;
+  padding: 0 15px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.row-home {
+  max-width: 655px;
+  padding-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.background {
+  height: 100vh;
+  background: linear-gradient(226.2deg, #5E7285 17.51%, #40456E 85.39%);
+}
+
+.background-img {
+  height: 100vh;
+  background: url(../assets/img/background.png);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: right center;
+}
+
+.logo {
+  margin-right: 116px;
+}
+
+.greeting {
+  user-select: none;
+  margin-top: 72px;
+  margin-left: 65px;
+
+  & h2 {
+    letter-spacing: 0.05em;
+  }
+
+  & p {
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 12px;
+    margin-left: 18px;
+    max-width: 270px;
+    letter-spacing: -0.05em;
+  }
+}
+
+.start {
+  margin-left: 40px;
+  margin-top: 52px;
+  margin-bottom: 50px;
+  width: 317px;
+  font-size: 14px;
+  font-weight: 300;
+  user-select: none;
+
+  & p {
+    max-width: 273px;
+    padding-bottom: 15px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+.hide {
+  display: none;
+  transition: ease 0.3s;
+}
+
+.center {
+  text-align: center;
+}
+
+.popup-home {
+  position: absolute;
+  top: 62px;
+  left: calc(50% - 314px);
+  width: 628px;
+  //height: 425px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(30px);
+  border-radius: 32px;
+  padding: 40px 66px 45px;
+
+  & .popup-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  & .popup-notification {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  & input {
+    width: 495px;
+    height: 48px;
+    margin-bottom: 9px;
+    padding: 0 21px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    border: 1px solid transparent;
+    transition: ease 0.1s;
+
+    &:focus:not(:active) {
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    &::placeholder {
+      line-height: 48px;
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: -0.05em;
+      color: #000
+    }
+  }
+
+  & .user-name {
+
+  }
+
+  & .email {
+
+  }
+}
+
+.popup-buttons {
+  margin-top: 80px;
+  margin-left: 234px;
+  width: 256px;
+
+  & button {
+    margin-right: 12px;
+  }
+}
+
