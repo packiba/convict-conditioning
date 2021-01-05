@@ -64,15 +64,15 @@ function Workout() {
     }
   }
 
-  function checkLevel(obj) {
-    const arrLog = obj.sets
-    const arrTarget = levels[obj.curLev].sets
+  function checkLevel(log) {
+    const arrLog = log.sets
+    const arrTarget = levels[log.curLev].sets
     for (let i = 0; i < arrLog.length; i++) {
       if (arrLog[i] < arrTarget[i]) {
-        return obj.curLev
+        return log.curLev
       }
     }
-    return obj.curLev === 2 ? obj.curLev : obj.curLev + 1
+    return log.curLev === 2 ? log.curLev : log.curLev + 1
   }
 
 
@@ -116,12 +116,12 @@ function Workout() {
     if (setsNum - (curSet + 1) > 0) {
       setCurSet(prevState => prevState + 1)
     } else {
-      saveLog()
+      userId && saveLog()
       history.push('/list')
     }
   }
 
-  const levsBuilder = (lev, id) => {
+  const levsBuilder = (lev) => {
     if (lev.sets[0] === 0) {
       return `1 сет, держать позицию ${lev.sets[1]} секунд`
     } else {
@@ -220,7 +220,7 @@ function Workout() {
                     <div className="level-description">
                       <span>{level.name}</span>
                       <span className="label">
-                        {levsBuilder(level, idLev)}
+                        {levsBuilder(level)}
                       </span>
                     </div>
 

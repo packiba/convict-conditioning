@@ -27,8 +27,44 @@ router.get('/:catId/:exId/:userId', async (req, res) => {
       {curLev: 1, sets: 1, _id: 0})
       .sort({$natural: -1}).limit(1)
     const log = data[0]
-    console.log('level and sets', log)
     res.status(200).json({log, message: 'Текущий уровень в последнем логе упражнения'})
+
+  } catch (e) {
+    res.status(500).json({message: 'Что-то пошло не так, серверная ошибка'})
+  }
+})
+
+// /journal/${catId}/${userId}
+router.get('/:catId/:userId', async (req, res) => {
+  try {
+    const data = await WorkoutLog.find(
+      {catId: req.params.catId, userId: req.params.userId},
+      {curLev: 1, exId: 1, _id: 0})
+      .sort({$natural: -1})
+    const levels = []
+    for (let i = 0; i < 10; i++) {
+      const exLvl = []
+      data.forEach(log => {
+        if (log.exId === i) {
+          exLvl.push(log.curLev)
+        }
+      })
+      levels.push(exLvl.length !== 0 ? exLvl[0] : -1)
+    }
+    res.status(200).json({levels, message: 'Список упражнений с текущим уровнем'})
+
+  } catch (e) {
+    res.status(500).json({message: 'Что-то пошло не так, серверная ошибка'})
+  }
+})
+
+// /journal/${userId}
+router.delete('/:userId', async (req, res) => {
+  try {
+    console.log('userId', req.params.userId)
+    const data = await WorkoutLog.remove({userId: req.params.userId})
+
+    res.status(200).json({message: 'Записи пользователя очищены'})
 
   } catch (e) {
     res.status(500).json({message: 'Что-то пошло не так, серверная ошибка'})

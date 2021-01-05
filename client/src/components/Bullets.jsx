@@ -1,24 +1,24 @@
 import classNames from "classnames";
 
-function Bullets({activeList}) {
+function Bullets({levelList}) {
   return (
     <div className="bullets">
       <div
         className={classNames(
           "dot",
-          {"active-dot": activeList[0]}
+          {"active-dot": levelList[0]}
         )}
       ></div>
       <div
         className={classNames(
           "dot",
-          {"active-dot": activeList[1]}
+          {"active-dot": levelList[1]}
         )}
       ></div>
       <div
         className={classNames(
           "dot",
-          {"active-dot": activeList[2]}
+          {"active-dot": levelList[2]}
         )}
       ></div>
     </div>
@@ -26,7 +26,7 @@ function Bullets({activeList}) {
 }
 
 Bullets.defaultProps = {
-  activeList: [true, false, false],
+  levelList: [false, false, false],
 }
 
 // Button.propTypes = {

@@ -66,7 +66,7 @@ function Timer({isVisible, seconds}) {
   function onTimesUp() {
     clearInterval(timerInterval)
     setCls('timer-background hide')
-    saveLog()
+    userId && saveLog()
     history.push('/list')
   }
 

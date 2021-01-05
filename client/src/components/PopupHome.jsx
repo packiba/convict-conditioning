@@ -1,14 +1,17 @@
-import classNames from "classnames";
 import React from 'react'
-import Button from './Button'
+import {useDispatch} from 'react-redux'
+import classNames from 'classnames'
+
+
 import {useHttp} from '../hooks/http.hook'
-import { useDispatch } from "react-redux";
 import {setUser} from '../redux/actions/user'
 import {AuthContext} from '../context/AuthContext'
+import Button from './Button'
+
 
 function PopupHome({onClosePopup, popupVisibility, popupType}) {
   const auth = React.useContext(AuthContext)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const {loading, error, request} = useHttp()
 
@@ -21,8 +24,14 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
     setMessage(error)
   }, [error, message])
 
-  const changeHandler = event => {
-    setForm({...form, [event.target.name]: event.target.value})
+  const changeHandler = evt => {
+    setForm({...form, [evt.target.name]: evt.target.value})
+  }
+
+  const pressKeyHandler = evt => {
+    if (evt.key === 'Enter') {
+      popupType === 'reg' ? registerHandler() : loginHandler()
+    }
   }
 
   const registerHandler = async () => {
@@ -54,9 +63,9 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
   return (
     <div
       className={classNames(
-        "popup-home",
-        "pu",
-        {"hide": !popupVisibility}
+        'popup-home',
+        'pu',
+        {'hide': !popupVisibility}
       )}
     >
       <h2 className="popup-title">{type}</h2>
@@ -69,6 +78,7 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
         maxLength="30"
         autoComplete="off"
         onChange={changeHandler}
+        onKeyPress={pressKeyHandler}
       />
       <input
         placeholder="Введи E-mail"
@@ -79,6 +89,7 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
         maxLength="30"
         autoComplete="off"
         onChange={changeHandler}
+        onKeyPress={pressKeyHandler}
       />
       <p className="popup-notification pu">{message}</p>
       <div className="popup-buttons pu">
@@ -98,7 +109,7 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
         </Button>
       </div>
     </div>
-  );
+  )
 }
 
 // Item.defaultProps = {
@@ -110,6 +121,6 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
 //   className: PropTypes.string.isRequired,
 // };
 
-export default PopupHome;
+export default PopupHome
 
 

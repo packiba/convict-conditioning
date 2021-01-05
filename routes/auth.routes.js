@@ -10,7 +10,6 @@ router.post(
   check('email', 'Некорректный email').isEmail(),
   async (req, res) => {
     try{
-      console.log('Body:', req.body)
       const errors = validationResult(req)
 
       if (!errors.isEmpty()) {

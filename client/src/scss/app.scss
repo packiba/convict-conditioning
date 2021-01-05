@@ -8,16 +8,11 @@
 @import 'components/bullets';
 @import 'components/workout-page';
 @import 'components/list-page';
+@import 'components/account-page';
 
-.container {
-  width: 1170px;
-  padding: 0 15px;
-  margin: 0 auto;
-  position: relative;
-}
 
 .row-home {
-  max-width: 655px;
+  max-width: 680px;
   padding-top: 60px;
   display: flex;
   align-items: center;
@@ -25,29 +20,38 @@
 }
 
 .background {
-  height: 100vh;
   background: linear-gradient(226.2deg, #5E7285 17.51%, #40456E 85.39%);
+  height: 100%;
 }
 
 .background-img {
-  height: 100vh;
   background: url(../assets/img/background.png);
   background-repeat: no-repeat;
-  background-size: auto;
-  background-position: right center;
+  background-size: auto 100%;
+  background-position: right top;
+}
+
+.container {
+  width: 1170px;
+  padding: 0 15px;
+  margin: 0 auto;
+  position: relative;
+  height: 937px;
 }
 
 .logo {
-  margin-right: 116px;
+  margin-right: 110px;
 }
 
 .greeting {
   user-select: none;
   margin-top: 72px;
-  margin-left: 65px;
+  //margin-left: 40px;
 
   & h2 {
     letter-spacing: 0.05em;
+    max-width: 317px;
+    text-align: center;
   }
 
   & p {
@@ -61,7 +65,7 @@
 }
 
 .start {
-  margin-left: 40px;
+  //margin-left: 40px;
   margin-top: 52px;
   margin-bottom: 50px;
   width: 317px;
