@@ -34,6 +34,27 @@ router.get('/:catId/:exId/:userId', async (req, res) => {
   }
 })
 
+// /journal/account/${userId}
+router.get('/account/:userId', async (req, res) => {
+  try {
+    const data = await WorkoutLog.find({userId: req.params.userId}).sort({$natural: -1})
+    const logs = data.map(log => {
+      const d = log._id.getTimestamp()
+      return {
+        date: (d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear()),
+        catId: log.catId,
+        exId: log.exId,
+        curLev: log.curLev,
+        sets: log.sets
+      }
+    })
+    res.status(200).json({logs, message: 'Выборка записей текущено аккаунта'})
+
+  } catch (e) {
+    res.status(500).json({message: 'Что-то пошло не так, серверная ошибка'})
+  }
+})
+
 // /journal/${catId}/${userId}
 router.get('/:catId/:userId', async (req, res) => {
   try {
@@ -57,6 +78,7 @@ router.get('/:catId/:userId', async (req, res) => {
     res.status(500).json({message: 'Что-то пошло не так, серверная ошибка'})
   }
 })
+
 
 // /journal/${userId}
 router.delete('/:userId', async (req, res) => {

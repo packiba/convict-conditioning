@@ -1,7 +1,8 @@
 .item {
   display: flex;
   align-items: center;
-  width: 605px;
+  width: 100%;
+  max-width: 605px;
   padding: 0 20px;
   background: linear-gradient(90.71deg, rgba(255, 255, 255, 0.06) 72.61%, rgba(255, 255, 255, 0) 99.4%);
   border: none;
@@ -28,7 +29,7 @@
   &.item--big {
     background: linear-gradient(90.45deg, rgba(255, 255, 255, 0.06) 14.23%, rgba(255, 255, 255, 0) 99.62%);
     padding: 0 30px;
-    width: 495px;
+    max-width: 495px;
     transition: background-color 0.5s ease-in-out;
 
     & span {

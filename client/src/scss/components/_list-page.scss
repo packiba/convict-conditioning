@@ -6,9 +6,12 @@
 .listpage-content {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .listpage-categories {
+  flex-grow: 1;
+  margin-bottom: 50px;
 
   & .item--big {
     margin-bottom: 12px;
@@ -16,6 +19,7 @@
 }
 
 .listpage-exercises {
+  flex-grow: 1;
 
   & .item {
     margin-bottom: 10px;

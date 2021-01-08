@@ -11,6 +11,23 @@ function AccountPage() {
   const user = useSelector(({user}) => user)
   const {request} = useHttp()
 
+  const [logs, setLogs]  = React.useState({})
+
+  // /journal/account/${userId}
+  const getUserLogs = async () => {
+    try {
+      const data = await request(`/journal/account/${user.id}`)
+      setLogs(data)
+      console.log('user logs', sortLogs(data))
+    } catch (e) {
+      console.log('error', e.message)
+    }
+  }
+
+  function sortLogs(logsArr) {
+
+  }
+
   const delLogs = async () => {
     try {
       const message = await request(`/journal/${user.id}`, 'DELETE')
@@ -19,6 +36,14 @@ function AccountPage() {
       console.log('error', e.message)
     }
   }
+
+  React.useEffect(() => {
+    async function load() {
+      await getUserLogs()
+      console.log('user id', user.id)
+    }
+    load()
+  }, [])
 
   return (
     <div className="background">
@@ -38,6 +63,7 @@ function AccountPage() {
             height="48"
             onClick={delLogs}
           >
+
             <span className="btn-account">Очистить мою историю</span>
           </Button>
         </section>

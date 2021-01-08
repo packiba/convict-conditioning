@@ -32,7 +32,7 @@
 }
 
 .container {
-  width: 1170px;
+  max-width: 1200px;
   padding: 0 15px;
   margin: 0 auto;
   position: relative;
@@ -159,3 +159,44 @@
   }
 }
 
+/* ------ Media Queries -------------------------- */
+
+/* 992-1200px */
+@media screen and (max-width: 1200px) {
+  .container {
+    max-width: 970px;
+  }
+  .workout-right {
+    margin-left: 0;
+  }
+}
+
+/* 768-992px */
+@media screen and (max-width: 992px) {
+  .container {
+    max-width: 750px;
+  }
+
+  //.exercise-row {
+  //  flex-direction: column;
+  //}
+}
+
+/* 576-768px */
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 520px;
+  }
+
+  .exercise-row {
+    justify-content: center;
+  }
+}
+
+/* 320-576px */
+@media screen and (max-width: 576px) {
+  .container {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
