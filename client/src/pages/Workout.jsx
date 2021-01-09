@@ -148,6 +148,7 @@ function Workout() {
           userId: userId,
           catId,
           exId: exerciseId,
+          exercise: name,
           curLev: activeLevel,
           sets: levels[activeLevel].sets
         })

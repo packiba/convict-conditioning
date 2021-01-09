@@ -28,7 +28,7 @@ function ExerciseList() {
     setExerList(data)
   }
 
-  const onActiveExercise = (id) => {
+  const onActiveExercise = id => {
     dispatch(setExercise(id, activeCategoryId))
   }
 

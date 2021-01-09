@@ -86,7 +86,7 @@ function Home() {
                 className={isLogin ? 'btn-account hide' : 'btn-account'}
                 height="48"
               >
-                <span className="btn-account">Кабинет</span>
+                <span className="btn-account">Дневник</span>
               </Button>
             </Link>
             <Button

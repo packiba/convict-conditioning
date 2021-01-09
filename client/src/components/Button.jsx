@@ -23,9 +23,4 @@ Button.defaultProps = {
   height: '48',
 }
 
-// Button.propTypes = {
-//   onClick: PropTypes.func,
-//   className: PropTypes.string.isRequired,
-// };
-
 export default Button

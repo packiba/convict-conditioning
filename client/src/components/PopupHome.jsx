@@ -112,15 +112,6 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
   )
 }
 
-// Item.defaultProps = {
-//   height: "48",
-// }
-
-// Button.propTypes = {
-//   onClick: PropTypes.func,
-//   className: PropTypes.string.isRequired,
-// };
-
 export default PopupHome
 
 

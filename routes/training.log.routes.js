@@ -7,12 +7,12 @@ const WorkoutLog = require('../models/WorkoutLog')
 router.post('/log', async (req, res) => {
   try {
 
-    const {catId, exId, curLev, sets, userId} = req.body
+    const {catId, exId, exercise, curLev, sets, userId} = req.body
 
-    const log = new WorkoutLog({catId, exId, curLev: curLev, sets, userId})
+    const log = new WorkoutLog({catId, exId, exercise, curLev, sets, userId})
 
     await log.save()
-    res.status(201).json({category: catId, exercise: exId, userId, message: 'Создана запись тренировки'})
+    res.status(201).json({category: catId, exercise, userId, message: 'Создана запись тренировки'})
 
   } catch (e) {
     res.status(500).json({message: 'Что-то пошло не так, серверная ошибка'})
@@ -40,10 +40,12 @@ router.get('/account/:userId', async (req, res) => {
     const data = await WorkoutLog.find({userId: req.params.userId}).sort({$natural: -1})
     const logs = data.map(log => {
       const d = log._id.getTimestamp()
+      const day = d.getDate().toString().length === 1 ? '0' + d.getDate() : d.getDate()
       return {
-        date: (d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear()),
+        date: (day + '.' + (d.getMonth() + 1) + '.' + d.getFullYear()),
         catId: log.catId,
         exId: log.exId,
+        exName: log.exercise,
         curLev: log.curLev,
         sets: log.sets
       }

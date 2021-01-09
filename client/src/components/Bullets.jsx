@@ -1,39 +1,35 @@
-import classNames from "classnames";
+import classNames from 'classnames'
+
 
 function Bullets({levelList}) {
   return (
     <div className="bullets">
       <div
         className={classNames(
-          "dot",
-          {"active-dot": levelList[0]}
+          'dot',
+          {'active-dot': levelList[0]}
         )}
       ></div>
       <div
         className={classNames(
-          "dot",
-          {"active-dot": levelList[1]}
+          'dot',
+          {'active-dot': levelList[1]}
         )}
       ></div>
       <div
         className={classNames(
-          "dot",
-          {"active-dot": levelList[2]}
+          'dot',
+          {'active-dot': levelList[2]}
         )}
       ></div>
     </div>
-  );
+  )
 }
 
 Bullets.defaultProps = {
   levelList: [false, false, false],
 }
 
-// Button.propTypes = {
-//   onClick: PropTypes.func,
-//   className: PropTypes.string.isRequired,
-// };
-
-export default Bullets;
+export default Bullets
 
 

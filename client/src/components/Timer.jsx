@@ -12,7 +12,7 @@ function Timer({isVisible, seconds}) {
   const history = useHistory()
   const {request} = useHttp()
   const userId = useSelector(({user}) => user.id)
-  const {catId, exerciseId, activeLevel} = useSelector(({exercise}) => exercise)
+  const {catId, exerciseId, name, activeLevel} = useSelector(({exercise}) => exercise)
 
   let timerInterval = null
   let [timeLeft, setTimeLeft] = React.useState(null)
@@ -162,6 +162,7 @@ function Timer({isVisible, seconds}) {
           userId: userId,
           catId,
           exId: exerciseId,
+          exercise: name,
           curLev: activeLevel,
         })
       console.log('log', data)

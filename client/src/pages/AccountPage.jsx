@@ -11,27 +11,49 @@ function AccountPage() {
   const user = useSelector(({user}) => user)
   const {request} = useHttp()
 
-  const [logs, setLogs]  = React.useState({})
+  const [logs, setLogs] = React.useState([])
+  const [dom, setDom] = React.useState([])
 
   // /journal/account/${userId}
   const getUserLogs = async () => {
     try {
       const data = await request(`/journal/account/${user.id}`)
-      setLogs(data)
-      console.log('user logs', sortLogs(data))
+      setLogs(sortLogs(data.logs))
     } catch (e) {
       console.log('error', e.message)
     }
   }
 
-  function sortLogs(logsArr) {
+  function levelName(num) {
+    switch (num) {
+      case 0:
+        return 'Начальный уровень'
+      case 1:
+        return 'Продвинутый уровень'
+      case 2:
+        return 'Мастер'
+    }
+  }
 
+  const sortLogs = (logsArr) => {
+    const dates = []
+    const table = logsArr.map((log, _, arr) => {
+      if (!dates.includes(log.date)) {
+        dates.push(log.date)
+        return {
+          date: log.date, info: arr.filter(date => log.date === date.date).map(log => {
+            return {catId: log.catId, exercise: log.exName, curLev: log.curLev, sets: log.sets}
+          })
+        }
+      }
+    }).filter(log => log)
+    return table
   }
 
   const delLogs = async () => {
     try {
       const message = await request(`/journal/${user.id}`, 'DELETE')
-      console.log(message)
+      setLogs([])
     } catch (e) {
       console.log('error', e.message)
     }
@@ -40,10 +62,34 @@ function AccountPage() {
   React.useEffect(() => {
     async function load() {
       await getUserLogs()
-      console.log('user id', user.id)
     }
+
     load()
   }, [])
+
+  React.useEffect(() => {
+    console.log('my logs', logs)
+    if (logs.length != 0) {
+      setDom(logs.map((log, i) => {
+        return (
+          <ul key={i} className='log'>
+            <p>{log.date}</p>
+            {log.info.map((item, idx) => {
+              return (
+                <li key={idx}>
+                  <span className='log__exercise'>{item.exercise}</span>
+                  <span className='log__level'>{levelName(item.curLev)}</span>
+                  <span className='log__sets'>{item.sets.join(', ')}</span>
+                </li>
+              )
+            })}
+          </ul>
+        )
+      }))
+    } else {
+      setDom(<h3 className='logs__empty'>Записей нет</h3>)
+    }
+  }, [logs])
 
   return (
     <div className="background">
@@ -56,16 +102,18 @@ function AccountPage() {
           </Link>
         </div>
         <section className="account">
-          <h1>Личный кабинет</h1>
-          <h2>{user.name}</h2>
-          <Button
+          <h2>{user.name}, вот твой</h2>
+          <h1>дневник тренировок</h1>
+          <div className='logs'>
+            {dom}
+          </div>
+          {logs.length !== 0 ? <Button
             className='btn-account'
             height="48"
             onClick={delLogs}
           >
-
             <span className="btn-account">Очистить мою историю</span>
-          </Button>
+          </Button> : ''}
         </section>
       </div>
     </div>
