@@ -105,10 +105,11 @@ function Workout() {
   }
 
   const onTimer = () => {
+    window.scrollTo(0, 0)
     setTimerVis(true)
   }
 
-  const doneCurSet = () => {
+   const doneCurSet = () => {
     const newLevels = levels
     newLevels[activeLevel].sets[curSet] = curReps
     setLevels(newLevels)
@@ -207,7 +208,7 @@ function Workout() {
             <div className="exercise-row">
 
               <div className="exercise-levels">
-                <span className="label">выбери уровень</span>
+                <span className="label label-levels">выбери уровень</span>
 
                 {levels.map((level, idLev) => (
                   <Item

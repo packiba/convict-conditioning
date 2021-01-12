@@ -41,8 +41,9 @@ router.get('/account/:userId', async (req, res) => {
     const logs = data.map(log => {
       const d = log._id.getTimestamp()
       const day = d.getDate().toString().length === 1 ? '0' + d.getDate() : d.getDate()
+      const month = (d.getMonth()+1).toString().length === 1 ? '0' + (d.getMonth()+1) : (d.getMonth()+1)
       return {
-        date: (day + '.' + (d.getMonth() + 1) + '.' + d.getFullYear()),
+        date: (day + '.' + month + '.' + d.getFullYear()),
         catId: log.catId,
         exId: log.exId,
         exName: log.exercise,

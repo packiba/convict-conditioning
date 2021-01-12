@@ -11,6 +11,7 @@ function AccountPage() {
   const user = useSelector(({user}) => user)
   const {request} = useHttp()
 
+  const [containerHeight, setContainerHeight] = React.useState('auto')
   const [logs, setLogs] = React.useState([])
   const [dom, setDom] = React.useState([])
 
@@ -70,6 +71,7 @@ function AccountPage() {
   React.useEffect(() => {
     console.log('my logs', logs)
     if (logs.length != 0) {
+      setContainerHeight('auto')
       setDom(logs.map((log, i) => {
         return (
           <ul key={i} className='log'>
@@ -88,12 +90,13 @@ function AccountPage() {
       }))
     } else {
       setDom(<h3 className='logs__empty'>Записей нет</h3>)
+      setContainerHeight('100vh')
     }
   }, [logs])
 
   return (
     <div className="background">
-      <div className="container">
+      <div className="container" style={{height: containerHeight}}>
         <div className="account-header">
           <Link to="/">
             <div className="logo account-logo">

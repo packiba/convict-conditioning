@@ -69,28 +69,31 @@ function PopupHome({onClosePopup, popupVisibility, popupType}) {
       )}
     >
       <h2 className="popup-title">{type}</h2>
-      <input
-        placeholder="Введи своё имя"
-        id="name"
-        type="text"
-        name="name"
-        className="user-name pu"
-        maxLength="30"
-        autoComplete="off"
-        onChange={changeHandler}
-        onKeyPress={pressKeyHandler}
-      />
-      <input
-        placeholder="Введи E-mail"
-        id="email"
-        type="email"
-        name="email"
-        className="email pu"
-        maxLength="30"
-        autoComplete="off"
-        onChange={changeHandler}
-        onKeyPress={pressKeyHandler}
-      />
+      <div className='inputs'>
+        <input
+          placeholder="Введи своё имя"
+          id="name"
+          type="text"
+          name="name"
+          className="user-name pu"
+          maxLength="30"
+          autoComplete="off"
+          onChange={changeHandler}
+          onKeyPress={pressKeyHandler}
+        />
+        <input
+          placeholder="Введи E-mail"
+          id="email"
+          type="email"
+          name="email"
+          className="email pu"
+          maxLength="30"
+          autoComplete="off"
+          onChange={changeHandler}
+          onKeyPress={pressKeyHandler}
+        />
+      </div>
+
       <p className="popup-notification pu">{message}</p>
       <div className="popup-buttons pu">
         <Button

@@ -17,6 +17,7 @@ function Home() {
   const user = useSelector(({user}) => user)
   const isLogin = !user.id
 
+
   const [popupVisibility, setPopupVis] = React.useState(false)
   const [popupType, setPopupType] = React.useState('')
   const userName = user.name
@@ -62,59 +63,65 @@ function Home() {
   return (
     <div className="background">
       <div className="background-img">
-        <div className="container">
+        <div className="container" style={{height: '100vh'}}>
           <div className="row-home">
             <div className="logo">
               <img src={logoPng} alt="logo"/>
             </div>
-            <Button
-              className={isLogin ? 'btn-account' : 'btn-account hide'}
-              height="48"
-              onClick={onOpenPopupReg}
-            >
-              <span className="btn-account">Регистрация</span>
-            </Button>
-            <Button
-              className={isLogin ? 'btn-account' : 'btn-account hide'}
-              height="48"
-              onClick={onOpenPopupLogin}
-            >
-              <span className="btn-account">Вход</span>
-            </Button>
-            <Link to='/account'>
+            <div className="buttons">
+              <Button
+                className={isLogin ? 'btn-account' : 'btn-account hide'}
+                height="48"
+                onClick={onOpenPopupReg}
+              >
+                <span className="btn-account">Регистрация</span>
+              </Button>
+              <Button
+                className={isLogin ? 'btn-account' : 'btn-account hide'}
+                height="48"
+                onClick={onOpenPopupLogin}
+              >
+                <span className="btn-account">Вход</span>
+              </Button>
+              <Link to='/account'>
+                <Button
+                  className={isLogin ? 'btn-account hide' : 'btn-account'}
+                  height="48"
+                >
+                  <span className="btn-account">Дневник</span>
+                </Button>
+              </Link>
               <Button
                 className={isLogin ? 'btn-account hide' : 'btn-account'}
-                height="48"
+                height="48" onClick={onLogout}
               >
-                <span className="btn-account">Дневник</span>
+                <span className="btn-account">Выход</span>
               </Button>
-            </Link>
-            <Button
-              className={isLogin ? 'btn-account hide' : 'btn-account'}
-              height="48" onClick={onLogout}
-            >
-              <span className="btn-account">Выход</span>
-            </Button>
+            </div>
           </div>
-          <div className="greeting">
-            <h2>Привет {userName}</h2>
-            <p>{textPrompt}</p>
-          </div>
-          <div className="start">
-            <p>нажми если хочешь начать заниматься по программе</p>
-            <Link to="/workout">
-              <Button
-                className="button-start"
-                height="86"
-              ><span>Начать тренировку по программе</span></Button>
-            </Link>
-          </div>
-          <div className="start">
-            <p>нажми если просто хочешь поделать определённые упражнения</p>
-            <Link to="/list">
-              <Button className="button-start" height="86"><span>Открыть список упражнений</span></Button>
-            </Link>
-          </div>
+            <section className='greeting-start'>
+              <div className="greeting">
+                <h2>Привет {userName}</h2>
+                <p>{textPrompt}</p>
+              </div>
+              {/*<div className="start">*/}
+              {/*  <p>нажми если хочешь начать заниматься по программе</p>*/}
+              {/*  <Link to="/workout">*/}
+              {/*    <Button*/}
+              {/*      className="button-start"*/}
+              {/*      height="86"*/}
+              {/*    ><span>Начать тренировку по программе</span></Button>*/}
+              {/*  </Link>*/}
+              {/*</div>*/}
+              <div className="start">
+                <p>нажми если просто хочешь поделать определённые упражнения</p>
+                <Link to="/list">
+                  <Button className="button-start" height="86"><span>Открыть список упражнений</span></Button>
+                </Link>
+              </div>
+            </section>
+
+
           <PopupHome
             onClosePopup={onClosePopup}
             popupVisibility={popupVisibility}

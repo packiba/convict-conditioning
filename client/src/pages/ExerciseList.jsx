@@ -19,11 +19,13 @@ function ExerciseList() {
   const activeCategory = useSelector(({categories}) => categories.activeCategory)
   const activeCategoryId = useSelector(({categories}) => categories.activeCategoryId)
 
+
   const [exerList, setExerList] = React.useState([])
   const [levels, setLevels] = React.useState([])
 
   const onActiveCategory = async (id) => {
     dispatch(setCategoryActive(id))
+    setExerList(new Array(10).fill(''))
     const data = await getCategoryExercises(id)
     setExerList(data)
   }
@@ -97,6 +99,7 @@ function ExerciseList() {
         </div>
         <div className="listpage-content">
           <div className="listpage-categories">
+            <span className='label'>список категорий</span>
             {categoryList.map((category, id) => {
               return (
                 <Item
@@ -113,6 +116,7 @@ function ExerciseList() {
             })}
           </div>
           <div className="listpage-exercises">
+            <span className='label'>упражнения выбранной категории</span>
             {exerList && exerList.map((exercise, id) => {
               return (
                 <Link to="/workout" key={id}>

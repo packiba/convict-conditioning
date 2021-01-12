@@ -21,7 +21,8 @@
     max-width: 322px;
 
     & img {
-      height: 322px;
+      height: auto;
+      max-width: 100%;
     }
   }
 }
@@ -45,9 +46,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 585px;
-    height: 57px;
-    padding: 0 20px;
+    max-width: 585px;
+    padding: 0px 20px 13px;
     background: linear-gradient(90.71deg, rgba(255, 255, 255, 0.06) 72.61%, rgba(255, 255, 255, 0) 99.4%);
     border: none;
     border-radius: 7px;
@@ -57,6 +57,11 @@
       font-size: 18px;
       font-weight: 400;
       user-select: none;
+      @media screen and (max-width: 1200px) {
+        & {
+          font-size: calc(16px + (18 - 16) * ((100vw - 320px) / (1200 - 320)));
+        }
+      }
 
       &.label {
         margin-top: 10px;
@@ -71,11 +76,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 605px;
-    height: 65px;
+    max-width: 605px;
     background: linear-gradient(90.71deg, rgba(255, 255, 255, 0.06) 72.61%, rgba(255, 255, 255, 0) 99.4%);
     border-radius: 7px;
-    padding: 0 20px;
+    padding: 0px 20px 13px;
     border: none;
 
     & span {
@@ -83,6 +87,11 @@
       font-size: 24px;
       letter-spacing: -0.05em;
       user-select: none;
+      @media screen and (max-width: 1200px) {
+        & {
+          font-size: calc(20px + (24 - 20) * ((100vw - 320px) / (1200 - 320)));
+        }
+      }
 
       &.label {
         margin-top: 10px;
@@ -96,8 +105,7 @@
 
 .exercise-row {
   display: flex;
-  justify-content: space-between;
-  //max-width: 680px;
+  justify-content: space-around;
   margin: 0 auto;
   flex-wrap: wrap;
 }
@@ -111,14 +119,33 @@
     font-weight: 300;
     margin-left: 20px;
   }
+
+  & .label-levels {
+    @media screen and (max-width: 426px) {
+      & {
+        margin-left: 25%;
+      }
+    }
+  }
 }
 
 .level-description {
-  width: 200px;
+  width: 178px;
+  flex-grow: 1;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  & span {
+    max-width: 165px;
+    margin: 0 auto;
+  }
 }
 
 .level-reps {
   display: flex;
+  justify-content: center;
+  width: 162px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   & .exercise-reps {
     width: 35px;
@@ -197,7 +224,7 @@
 }
 
 .workout-descript {
-  //margin-top: 26px;
+  padding-bottom: 40px;
   user-select: none;
 
   & p {
