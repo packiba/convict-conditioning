@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 
 
 import logoPng from '../assets/img/logo.png'
+import spinner from '../assets/img/spinner.gif'
 import Item from '../components/Item'
 import Bullets from '../components/Bullets'
 import {useHttp} from '../hooks/http.hook'
@@ -19,7 +20,7 @@ function ExerciseList() {
   const activeCategory = useSelector(({categories}) => categories.activeCategory)
   const activeCategoryId = useSelector(({categories}) => categories.activeCategoryId)
 
-
+  const [containerHeight, setContainerHeight] = React.useState('100vh')
   const [exerList, setExerList] = React.useState([])
   const [levels, setLevels] = React.useState([])
 
@@ -28,6 +29,9 @@ function ExerciseList() {
     setExerList(new Array(10).fill(''))
     const data = await getCategoryExercises(id)
     setExerList(data)
+    document.getElementById('exercises').scrollIntoView(
+      {behavior: 'smooth', block: 'start'}
+    )
   }
 
   const onActiveExercise = id => {
@@ -68,6 +72,7 @@ function ExerciseList() {
     async function load() {
       await getAllCategories()
       setExerList(await getCategoryExercises(activeCategoryId))
+      setContainerHeight('auto')
     }
 
     load()
@@ -89,7 +94,7 @@ function ExerciseList() {
 
   return (
     <div className="background">
-      <div className="container">
+      <div className="container" style={{height: containerHeight}}>
         <div className="listpage-header">
           <Link to="/">
             <div className="logo center">
@@ -115,7 +120,7 @@ function ExerciseList() {
               )
             })}
           </div>
-          <div className="listpage-exercises">
+          <div className="listpage-exercises" id='exercises'>
             <span className='label'>упражнения выбранной категории</span>
             {exerList && exerList.map((exercise, id) => {
               return (
@@ -129,7 +134,7 @@ function ExerciseList() {
                     <Bullets
                       levelList={bulletsBuilder(levels[id])}
                     />
-                    <span>{exercise}</span>
+                    {exercise === '' ? <img src={spinner} width="20" alt="logo"/> : <span>{exercise}</span>}
                   </Item>
                 </Link>
               )

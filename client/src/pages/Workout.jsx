@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 import {useDispatch, useSelector} from 'react-redux'
 
 import logoPng from '../assets/img/logo.png'
+import spinner from '../assets/img/spinner.gif'
 import empty from '../assets/img/empty.png'
 import Item from '../components/Item'
 import Button from '../components/Button'
@@ -20,6 +21,7 @@ function Workout() {
   const {catId, exerciseId, activeLevel, isLoaded} = useSelector(({exercise}) => exercise)
   const {name, category, level1, level2, level3, description, animUri} = useSelector(({exercise}) => exercise)
 
+  const [containerHeight, setContainerHeight] = React.useState('100vh')
   const [levels, setLevels] = React.useState(
     [
       {name: 'Начальный уровень', sets: level1},
@@ -94,6 +96,7 @@ function Workout() {
   React.useEffect(() => {
     async function load() {
       await getExercise(catId, exerciseId)
+      setContainerHeight('auto')
       await getLastLog(catId, exerciseId, userId)
     }
     load()
@@ -162,7 +165,7 @@ function Workout() {
   if (!isLoaded) {
     return (
       <div className="background">
-        <div className="container">
+        <div className="container" style={{height: containerHeight}}>
           <div className="workout-row">
             <div className="workout-left">
               <Link to="/">
@@ -182,7 +185,7 @@ function Workout() {
 
   return (
     <div className="background">
-      <div className="container">
+      <div className="container" style={{height: containerHeight}}>
         <div className="workout-row">
           <div className="workout-left">
             <Link to="/">
